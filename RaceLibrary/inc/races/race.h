@@ -3,6 +3,8 @@
 #include <string>
 
 #include "vehicle.h"
+#include "vehicles_factory.h"
+#include "vehicles_models.h"
 
 namespace races
 {
@@ -21,7 +23,7 @@ namespace races
 		void setDistance(double distance);
 		double getDistance() const { return distance; } 
 		int getParticipantsNumber() const { return participants_number; }
-		void registerVehicle(const vehicles::Vehicle* vehicle);
+		void registerVehicle(const vehicles_models::VehiclesModels model);
 		const vehicles::Vehicle** getRegisteredVehicles() { return registered_vehicles; }
 		const LeadershipListEntry* runRace();
 
@@ -33,6 +35,7 @@ namespace races
 		LeadershipListEntry* leadership_list = nullptr;
 
 		void deleteVehiclesStorage();
+		void deleteVehicles();
 		void deleteLeadershipList();
 		void sortVehiclesByTravelTime();
 		void createLeadershipList();

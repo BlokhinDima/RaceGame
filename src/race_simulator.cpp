@@ -4,14 +4,15 @@
 #include "race_simulator.h"
 #include "race.h"
 #include "vehicle.h"
-#include "factories.h"
+#include "races_factory.h"
+#include "vehicles_factory.h"
 #include "simulator_exception.h"
 #include "registration_exception.h"
 #include "distance_exception.h"
 
 race_simulators::RaceSimulator::~RaceSimulator()
 {
-	delete race; // function
+	races_factory::deleteRace(race);
 }
 
 int race_simulators::RaceSimulator::getParticipantsNumber() const
@@ -41,17 +42,17 @@ void race_simulators::RaceSimulator::printRaceInfo() const
 	std::cout << std::endl;
 }
 
-void race_simulators::RaceSimulator::registerVehicle(factories::VehiclesModels model)
+void race_simulators::RaceSimulator::registerVehicle(vehicles_models::VehiclesModels model)
 {
-	vehicles::Vehicle* vehicle = factories::createVehicle(model);
-	race->registerVehicle(vehicle);
-	std::cout << vehicle->getName() + " registered!" << std::endl;
+	race->registerVehicle(model);
+	const char* vehicle_name = vehicles_models::vehicleToString(model);
+	std::cout << std::endl << vehicle_name << " registered!" << std::endl;
 }
 
-void race_simulators::RaceSimulator::setRaceType(factories::RacesTypes type)
+void race_simulators::RaceSimulator::setRaceType(races_factory::RacesTypes type)
 {
-	// delete prev race
-	race = factories::createRace(type);
+	races_factory::deleteRace(race);
+	race = races_factory::createRace(type);
 }
 
 void race_simulators::RaceSimulator::simulateRace()

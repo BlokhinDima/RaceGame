@@ -2,8 +2,10 @@
 
 #include <string>
 
-namespace vehicles {
+#include "vehicles_models.h"
 
+namespace vehicles 
+{
 	enum class VehicleType
 	{
 		UNKNOWN,
@@ -14,16 +16,16 @@ namespace vehicles {
 	class Vehicle
 	{
 	public:
-		Vehicle(VehicleType type=VehicleType::UNKNOWN, std::string const& name="Vehicle", int speed=1)
-			: vehicle_type(type), name(name), speed(speed) {}
+		Vehicle(vehicles_models::VehiclesModels model, VehicleType type=VehicleType::UNKNOWN, int speed=1)
+			: model(model), vehicle_type(type), speed(speed) {}
 		virtual ~Vehicle() {}
-		const std::string& getName() const { return name; }
+		const char* getName() const { return vehicles_models::vehicleToString(model); }
 		const VehicleType getType() const { return vehicle_type; }
 		virtual double calculateTravelTime(double distance) const = 0;
 
 	protected:
-		VehicleType vehicle_type;
-		const std::string name;
+		const VehicleType vehicle_type;
+		const vehicles_models::VehiclesModels model;
 		unsigned int speed;
 	};
 }

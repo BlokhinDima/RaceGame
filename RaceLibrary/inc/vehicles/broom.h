@@ -1,13 +1,14 @@
 #pragma once
 
 #include "air_vehicle.h"
+#include "vehicles_models.h"
 
 namespace vehicles
 {
 	class Broom : public AirVehicle
 	{
 	public:
-		Broom() : AirVehicle("Broom", 20) {}
+		Broom() : AirVehicle(vehicles_models::VehiclesModels::BROOM, 20) {}
 		virtual ~Broom() {}
 
 	private:

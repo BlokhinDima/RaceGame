@@ -1,6 +1,9 @@
 #include "eagle.h"
 
-double vehicles::Eagle::getReductonFactor(double distance) const
+namespace vehicles
 {
-	return 0.06;
+	double Eagle::getReductonFactor(double distance) const
+	{
+		return 0.06;
+	}
 }

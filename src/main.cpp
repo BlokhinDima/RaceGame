@@ -1,6 +1,11 @@
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 #include <iostream>
 
-#include "factories.h"
+
+#include "races_factory.h"
+#include "vehicles_factory.h"
 #include "race_simulator.h"
 #include "registration_exception.h"
 #include "simulator_exception.h"
@@ -16,7 +21,7 @@ enum ProgramStatus
 
 void printRacesMenu()
 {
-	std::cout << std::endl;
+	std::cout << std::endl; 
 	std::cout << "1. Ground vehicles race" << std::endl;
 	std::cout << "2. Air vehicles race" << std::endl;
 	std::cout << "3. Mixed vehicles race" << std::endl;
@@ -68,12 +73,16 @@ void registerVehicles(race_simulators::RaceSimulator& race_simulator)
 	{
 		for (;;)
 		{
+			std::cout << std::endl 
+				<< "Select vehicle model or enter 0 to end registration: ";
 			printVehiclesRegistrationMenu();
 			int input = handleInput();
 
 			if (input == 0) { break; }
 
-			race_simulator.registerVehicle(static_cast<factories::VehiclesModels>(input - 1));
+			race_simulator.registerVehicle(
+				static_cast<vehicles_models::VehiclesModels>(input - 1)
+			);
 			race_simulator.printRaceInfo();
 		}
 	}
@@ -93,9 +102,10 @@ void processRaceTypeSelection(race_simulators::RaceSimulator& race_simulator)
 {
 	try 
 	{
+		std::cout << std::endl <<"Select race type: ";
 		printRacesMenu();
 		int race_type = handleInput();
-		race_simulator.setRaceType(static_cast<factories::RacesTypes>(race_type - 1));
+		race_simulator.setRaceType(static_cast<races_factory::RacesTypes>(race_type - 1));
 	}
 	catch (const simulator_exceptions::SimulatorError& ex)
 	{
@@ -153,8 +163,9 @@ void processVehiclesRegistration(race_simulators::RaceSimulator& race_simulator)
 bool askForRestart()
 {
 	int choice = 0;
-	while ((choice != 1) && (choice != 2))
+	for(;;)
 	{
+		std::cout << std::endl << "Do you want to start new race?";
 		printEndMenu();
 		choice = handleInput();
 		if (choice == 1)
@@ -167,7 +178,8 @@ bool askForRestart()
 		}
 		else
 		{
-			std::cout << "Wrong option! Try again.";
+			std::cout << std::endl << "Wrong option! Try again." << std::endl;
+			continue;
 		}
 	}
 }
@@ -195,6 +207,9 @@ int main()
 			break;
 		}
 	}
+
+	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+	_CrtDumpMemoryLeaks();
 
 	return OK;
 }

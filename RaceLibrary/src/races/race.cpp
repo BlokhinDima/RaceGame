@@ -3,6 +3,7 @@
 
 #include "race.h"
 #include "vehicle.h"
+#include "vehicles_factory.h"
 #include "distance_exception.h"
 #include "competitors_number_exception.h"
 #include "registration_exception.h"
@@ -10,7 +11,8 @@
 races::Race::~Race()
 {
 	deleteLeadershipList();
-	//deleteVehiclesStorage();
+	deleteVehicles();
+	deleteVehiclesStorage();
 }
 
 void races::Race::deleteVehiclesStorage()
@@ -22,11 +24,22 @@ void races::Race::deleteVehiclesStorage()
 	}
 }
 
+void races::Race::deleteVehicles()
+{
+	if (registered_vehicles)
+	{
+		for (int i = 0; i < participants_number; ++i)
+		{
+			delete registered_vehicles[i];
+		}
+	}
+}
+
 void races::Race::deleteLeadershipList()
 {
 	if (leadership_list)
 	{
-		delete leadership_list;
+		delete[] leadership_list;
 		leadership_list = nullptr;
 	}
 }
@@ -40,10 +53,13 @@ void races::Race::setDistance(double distance)
 	this->distance = distance;
 }
 
-void races::Race::registerVehicle(const vehicles::Vehicle* vehicle)
+void races::Race::registerVehicle(const vehicles_models::VehiclesModels model)
 {
+	vehicles::Vehicle* vehicle = vehicles_factory::createVehicle(model);
+
 	if (isVehicleRegistered(vehicle))
 	{
+		vehicles_factory::deleteVehicle(vehicle);
 		throw simulator_exceptions::RegistrationError(
 			"This type of vehicle already registred!"
 		);
@@ -51,6 +67,7 @@ void races::Race::registerVehicle(const vehicles::Vehicle* vehicle)
 
 	if (!isVehicleCompatible(vehicle))
 	{
+		vehicles_factory::deleteVehicle(vehicle);
 		throw simulator_exceptions::RegistrationError(
 			"Attemp to registrate incompatible vehicle type!"
 		);

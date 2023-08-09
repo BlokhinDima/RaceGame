@@ -1,13 +1,14 @@
 #pragma once
 
 #include "vehicle.h"
+#include "vehicles_models.h"
 
 namespace vehicles
 {
 	class AirVehicle : public Vehicle
 	{
 	public:
-		AirVehicle(std::string const& name, int speed) : Vehicle(VehicleType::AIR, name, speed) {}
+		AirVehicle(vehicles_models::VehiclesModels model, int speed) : Vehicle(model, VehicleType::AIR, speed) {}
 		virtual ~AirVehicle() {}
 		double calculateTravelTime(double distance) const override;
 

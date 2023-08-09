@@ -2,7 +2,10 @@
 
 #include "race.h"
 #include "vehicle.h"
-#include "factories.h"
+#include "vehicles_models.h"
+#include "races_factory.h"
+#include "vehicles_factory.h"
+
 
 namespace race_simulators {
 
@@ -10,11 +13,11 @@ namespace race_simulators {
 	{
 	public:
 		~RaceSimulator();
-		void setRaceType(factories::RacesTypes type);
+		void setRaceType(races_factory::RacesTypes type);
 		void setRaceDistance(double distance);
 		void simulateRace();
 		void printRaceInfo() const;
-		void registerVehicle(factories::VehiclesModels model);
+		void registerVehicle(const vehicles_models::VehiclesModels model);
 		void printLeadershipTable() const;
 		int getParticipantsNumber() const;
 
