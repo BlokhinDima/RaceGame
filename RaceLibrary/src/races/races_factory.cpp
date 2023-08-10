@@ -1,9 +1,9 @@
 #include <stdexcept>
 
+#include "races_factory.h"
 #include "race.h"
 #include "air_race.h"
 #include "ground_race.h"
-#include "races_factory.h"
 #include "simulator_exception.h"
 
 namespace races_factory
@@ -22,7 +22,7 @@ namespace races_factory
 			return new races::AirRace();
 
 		default:
-			throw simulator_exceptions::SimulatorError("Undefined race type!");
+			throw simulator_exceptions::SimulatorException("Undefined race type!");
 		}
 	}
 
@@ -31,6 +31,7 @@ namespace races_factory
 		if (race)
 		{
 			delete race;
+			race = nullptr;
 		}
 	}
 }

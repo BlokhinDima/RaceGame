@@ -40,7 +40,7 @@ namespace vehicles_factory
 			return new vehicles::Broom();
 
 		default:
-			throw simulator_exceptions::SimulatorError("Undefined vehicle type!");
+			throw simulator_exceptions::SimulatorException("Undefined vehicle type!");
 		}
 	}
 
@@ -49,6 +49,7 @@ namespace vehicles_factory
 		if (vehicle)
 		{
 			delete vehicle;
+			vehicle = nullptr;
 		}
 	}
 }

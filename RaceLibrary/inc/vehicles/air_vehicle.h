@@ -8,7 +8,8 @@ namespace vehicles
 	class AirVehicle : public Vehicle
 	{
 	public:
-		AirVehicle(vehicles_models::VehiclesModels model, int speed) : Vehicle(model, VehicleType::AIR, speed) {}
+		AirVehicle(vehicles_models::VehiclesModels model, int speed) 
+			: Vehicle(model, VehicleType::AIR, speed) {}
 		virtual ~AirVehicle() {}
 		double calculateTravelTime(double distance) const override;
 

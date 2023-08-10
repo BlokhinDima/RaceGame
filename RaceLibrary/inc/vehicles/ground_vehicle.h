@@ -8,8 +8,8 @@ namespace vehicles
 	class GroundVehicle : public Vehicle
 	{
 	public:
-		GroundVehicle(vehicles_models::VehiclesModels model, int speed, int movement_time_until_rest)
-			: Vehicle(model, VehicleType::GROUND, speed), move_time_until_rest(movement_time_until_rest) {}
+		GroundVehicle(vehicles_models::VehiclesModels model, int speed, int move_time_until_rest)
+			: Vehicle(model, VehicleType::GROUND, speed), move_time_until_rest(move_time_until_rest) {}
 		virtual ~GroundVehicle() {}
 		double calculateTravelTime(double distance) const override;
 

@@ -5,9 +5,9 @@
 
 namespace simulator_exceptions
 {
-	class SimulatorError : public std::domain_error
+	class SimulatorException : public std::domain_error
 	{
 	public:
-		SimulatorError(std::string message) : std::domain_error(message) {}
+		SimulatorException(std::string message) : std::domain_error(message) {}
 	};
 }
